@@ -11,19 +11,28 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     public float speed = 2;
 
+    [SerializeField]
+    float jumpSpeed = 100;
+    int maxJumps = 1;
+    int jumps;
+
+    
+   
 
     void Start ()
     {
         hMoveSpeed = 150.0f;
         vMoveSpeed = 5.0f;
-         
+
+        jumps = maxJumps;
+
     }
 	
 	
 	void Update ()
     {
-        //gamepadControls();
-        keyboardControls();
+        gamepadControls();
+        //keyboardControls();
 
         /*
         // Generate a plane that intersects the transform's position with an upwards normal.
@@ -58,23 +67,28 @@ public class PlayerController : MonoBehaviour {
     }
     void keyboardControls()
     {
-
-        //var x = Input.GetAxis("Horizontal") * Time.deltaTime * hMoveSpeed;
+        //move inputs
         var z = Input.GetAxis("Vertical") * Time.deltaTime * vMoveSpeed;
         var strafe = Input.GetAxis("Horizontal") * Time.deltaTime * vMoveSpeed;
-
         float mouseInput = Input.GetAxis("Mouse X");
-        Vector3 lookhere = new Vector3(0, mouseInput*1.2f, 0);
-        transform.Rotate(lookhere);
+        Vector3 lookhere = new Vector3(0, mouseInput, 0);
 
-        //transform.Rotate(0, x, 0);
+        transform.Rotate(lookhere);
         transform.Translate(strafe, 0, z);
+
+
+        //jump so far can jump as many times as want because no ground takes jumps away
+        if(Input.GetKeyDown("space") == true && jumps > 0)
+        {
+            this.GetComponent<Rigidbody>().AddForce(Vector3.up * jumpSpeed);
+        }
 
     }
 
  
     void gamepadControls()
     {
+
         var x = Input.GetAxis("HorizontalR") * Time.deltaTime * hMoveSpeed;
         var z = Input.GetAxis("VerticalL") * Time.deltaTime * vMoveSpeed;
         var strafe = Input.GetAxis("HorizontalL") * Time.deltaTime * vMoveSpeed;
@@ -86,8 +100,15 @@ public class PlayerController : MonoBehaviour {
         transform.Translate(strafe, 0, z);
         Camera.main.transform.Rotate(headTilt, 0, 0);
 
-        
-        
+
+        //jump
+        if (Input.GetButtonDown("JumpGP") == true && jumps > 0)
+        {
+            this.GetComponent<Rigidbody>().AddForce(Vector3.up * jumpSpeed);
+        }
+
+
+
     }
 
 

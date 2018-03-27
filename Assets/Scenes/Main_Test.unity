@@ -365,6 +365,7 @@ MonoBehaviour:
   hMoveSpeed: 0
   vMoveSpeed: 0
   speed: 2
+  jumpSpeed: 200
 --- !u!1 &1630560008
 GameObject:
   m_ObjectHideFlags: 0
