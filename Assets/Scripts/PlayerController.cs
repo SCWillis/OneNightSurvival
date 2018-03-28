@@ -11,10 +11,13 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     public float speed = 2;
 
-    [SerializeField]
-    float jumpSpeed = 100;
+    //[SerializeField]
+    float jumpSpeed = 700;
     int maxJumps = 1;
     int jumps;
+
+    [SerializeField]
+    Terrain terrain;
 
     
    
@@ -22,49 +25,41 @@ public class PlayerController : MonoBehaviour {
     void Start ()
     {
         hMoveSpeed = 150.0f;
-        vMoveSpeed = 5.0f;
+        vMoveSpeed = 50.0f;
 
         jumps = maxJumps;
+
+        
+
 
     }
 	
 	
 	void Update ()
     {
-        gamepadControls();
-        //keyboardControls();
-
-        /*
-        // Generate a plane that intersects the transform's position with an upwards normal.
-        Plane playerPlane = new Plane(Vector3.up, transform.position);
-
-        // Generate a ray from the cursor position
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        // Determine the point where the cursor ray intersects the plane.
-        // This will be the point that the object must look towards to be looking at the mouse.
-        // Raycasting to a Plane object only gives us a distance, so we'll have to take the distance,
-        //   then find the point along that ray that meets that distance.  This will be the point
-        //   to look at.
-        float hitdist = 0.0f;
-        // If the ray is parallel to the plane, Raycast will return false.
-        if (playerPlane.Raycast(ray, out hitdist))
+        //test to see if gamepad is connected
+        if (Input.GetJoystickNames()[0] == string.Empty)
         {
-            // Get the point along the ray that hits the calculated distance.
-            Vector3 targetPoint = ray.GetPoint(hitdist);
-
-            // Determine the target rotation.  This is the rotation if the transform looks at the target point.
-            Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
-
-            // Smoothly rotate towards the target point.
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, speed * Time.deltaTime);
-            Debug.Log(transform.rotation.ToString());
+            keyboardControls();
         }
-        */
-
-
+        else
+        {
+            gamepadControls();
+        }
+      
+        
 
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other == terrain.GetComponent<TerrainCollider>())
+        {
+            jumps = maxJumps;
+            
+        }
+    }
+
     void keyboardControls()
     {
         //move inputs
@@ -81,6 +76,7 @@ public class PlayerController : MonoBehaviour {
         if(Input.GetKeyDown("space") == true && jumps > 0)
         {
             this.GetComponent<Rigidbody>().AddForce(Vector3.up * jumpSpeed);
+            jumps -= 1;
         }
 
     }
@@ -105,6 +101,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetButtonDown("JumpGP") == true && jumps > 0)
         {
             this.GetComponent<Rigidbody>().AddForce(Vector3.up * jumpSpeed);
+            jumps -= 1;
         }
 
 

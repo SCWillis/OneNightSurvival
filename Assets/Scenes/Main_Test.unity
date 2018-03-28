@@ -261,6 +261,7 @@ GameObject:
   - component: {fileID: 817291603}
   - component: {fileID: 817291602}
   - component: {fileID: 817291607}
+  - component: {fileID: 817291608}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Player
@@ -275,7 +276,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 817291601}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 3
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -344,7 +345,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 817291601}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 1.46, z: 10}
+  m_LocalPosition: {x: 10, y: 1.23, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1630560009}
@@ -365,7 +366,20 @@ MonoBehaviour:
   hMoveSpeed: 0
   vMoveSpeed: 0
   speed: 2
-  jumpSpeed: 200
+  terrain: {fileID: 597725637}
+--- !u!136 &817291608
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 817291601}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1630560008
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,6 +391,7 @@ GameObject:
   - component: {fileID: 1630560013}
   - component: {fileID: 1630560012}
   - component: {fileID: 1630560011}
+  - component: {fileID: 1630560010}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -397,6 +412,17 @@ Transform:
   m_Father: {fileID: 817291606}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1630560010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1630560008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cf2f7dd912191b46ae4cf3df1ce29ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!81 &1630560011
 AudioListener:
   m_ObjectHideFlags: 0
