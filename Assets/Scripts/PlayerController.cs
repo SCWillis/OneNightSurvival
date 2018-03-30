@@ -24,21 +24,22 @@ public class PlayerController : MonoBehaviour {
 
     void Start ()
     {
-        hMoveSpeed = 150.0f;
-        vMoveSpeed = 50.0f;
-
+        hMoveSpeed = 10.0f;
+        vMoveSpeed = 10.0f;
         jumps = maxJumps;
-
-        
-
 
     }
 	
 	
 	void Update ()
     {
+
+        keyboardControls();
+        /*
+        string[] joy = Input.GetJoystickNames();
+
         //test to see if gamepad is connected
-        if (Input.GetJoystickNames()[0] == string.Empty)
+        if (joy.Length == 0)
         {
             keyboardControls();
         }
@@ -46,11 +47,12 @@ public class PlayerController : MonoBehaviour {
         {
             gamepadControls();
         }
-      
+      */
         
 
     }
 
+    //reset jumps
     void OnTriggerEnter(Collider other)
     {
         if(other == terrain.GetComponent<TerrainCollider>())
@@ -85,10 +87,13 @@ public class PlayerController : MonoBehaviour {
     void gamepadControls()
     {
 
-        var x = Input.GetAxis("HorizontalR") * Time.deltaTime * hMoveSpeed;
+        float vSpeedOffset = 15f; //to speed up gamepad movement 
+        float hSpeedOffset = 15f; //to speed up gamepad movement
+
+        var x = Input.GetAxis("HorizontalR") * Time.deltaTime * hMoveSpeed * hSpeedOffset;
         var z = Input.GetAxis("VerticalL") * Time.deltaTime * vMoveSpeed;
         var strafe = Input.GetAxis("HorizontalL") * Time.deltaTime * vMoveSpeed;
-        var headTilt = Input.GetAxis("VerticalR") * Time.deltaTime * vMoveSpeed;
+        var headTilt = Input.GetAxis("VerticalR") * Time.deltaTime * vMoveSpeed * vSpeedOffset;
 
 
 
