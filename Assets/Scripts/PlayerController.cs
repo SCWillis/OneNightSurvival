@@ -19,7 +19,16 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     Terrain terrain;
 
-    
+
+    //animations
+    [SerializeField]
+    GameObject lamp;
+
+    [SerializeField]
+    GameObject axe;
+
+    Animator lampAnim;
+    Animator axeAnim;
    
 
     void Start ()
@@ -28,6 +37,12 @@ public class PlayerController : MonoBehaviour {
         vMoveSpeed = 10.0f;
         jumps = maxJumps;
 
+        lampAnim = lamp.GetComponent<Animator>();
+        axeAnim = axe.GetComponent<Animator>();
+
+        lampAnim.enabled = false;
+        axeAnim.enabled = false;
+
     }
 	
 	
@@ -35,6 +50,14 @@ public class PlayerController : MonoBehaviour {
     {
 
         keyboardControls();
+        if(Input.GetMouseButton(0) == true)
+        {
+            SwingAxe(true);
+        }
+        else
+        {
+            SwingAxe(false);
+        }
         /*
         string[] joy = Input.GetJoystickNames();
 
@@ -53,12 +76,21 @@ public class PlayerController : MonoBehaviour {
     }
 
     //reset jumps
+    /*
     void OnTriggerEnter(Collider other)
     {
         if(other == terrain.GetComponent<TerrainCollider>())
         {
             jumps = maxJumps;
             
+        }
+    }
+    */
+    private void OnCollisionEnter(Collision col) //works better, no need for second collider on player now
+    {
+        if (col.gameObject.tag == "Ground")
+        {
+            jumps = maxJumps;
         }
     }
 
@@ -79,7 +111,13 @@ public class PlayerController : MonoBehaviour {
         {
             this.GetComponent<Rigidbody>().AddForce(Vector3.up * jumpSpeed);
             jumps -= 1;
+            //SwingLamp();
         }
+
+        //**animations**//
+        //Lamp animation
+        SwingLamp(z, strafe);
+
 
     }
 
@@ -109,8 +147,33 @@ public class PlayerController : MonoBehaviour {
             jumps -= 1;
         }
 
+        //animations
 
+    }
 
+    void SwingLamp(float xMove, float yMove)
+    {
+        if (xMove != 0f || yMove != 0f)
+        {
+            lampAnim.enabled = true;
+        }
+        else
+        {
+            lampAnim.enabled = false;
+        }
+        
+    }
+
+    void SwingAxe(bool swing)
+    {
+        if(swing == true)
+        {
+            axeAnim.enabled = true;
+        }
+        else
+        {
+            axeAnim.enabled = false;
+        }
     }
 
 

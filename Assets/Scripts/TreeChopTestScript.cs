@@ -7,7 +7,7 @@ public class TreeChopTestScript : MonoBehaviour {
     [SerializeField]
     GameObject stump;
 
-    bool canHarvest = true;
+    bool harvested = false;
 
 
 	// Use this for initialization
@@ -22,9 +22,11 @@ public class TreeChopTestScript : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
+
         Debug.Log("hit tree");
-        GameObject stumpChopped = Object.Instantiate(stump);
-        stumpChopped.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        //GameObject stumpChopped = Object.Instantiate(stump);
+        Instantiate(stump, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+        //stumpChopped.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         Destroy(this.gameObject);
     }
 }
