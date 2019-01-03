@@ -7,6 +7,9 @@ public class TreeChopTestScript : MonoBehaviour {
     [SerializeField]
     GameObject stump;
 
+    [SerializeField]
+    GameObject axe;
+
     bool harvested = false;
 
 
@@ -23,10 +26,14 @@ public class TreeChopTestScript : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
 
-        Debug.Log("hit tree");
-        //GameObject stumpChopped = Object.Instantiate(stump);
-        Instantiate(stump, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
-        //stumpChopped.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        Destroy(this.gameObject);
+        if (other == axe)
+        {
+
+            Debug.Log("hit tree");
+            //GameObject stumpChopped = Object.Instantiate(stump);
+            Instantiate(stump, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+            //stumpChopped.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            Destroy(this.gameObject);
+        }
     }
 }
